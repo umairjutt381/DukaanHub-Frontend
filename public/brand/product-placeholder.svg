@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title description">
+  <title id="title">Product image unavailable</title>
+  <desc id="description">A minimal shopping bag placeholder.</desc>
+  <rect width="800" height="1000" fill="#eeeae2"/>
+  <circle cx="400" cy="450" r="150" fill="#fffefa" stroke="#e2ded5" stroke-width="4"/>
+  <path d="M326 420h148l-10 118H336l-10-118Z" fill="none" stroke="#6f706a" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M362 420v-20c0-23 17-41 38-41s38 18 38 41v20" fill="none" stroke="#078a2f" stroke-width="12" stroke-linecap="round"/>
+  <text x="400" y="660" fill="#6f706a" font-family="Arial, sans-serif" font-size="25" text-anchor="middle" letter-spacing="3">IMAGE COMING SOON</text>
+</svg>
