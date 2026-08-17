@@ -18,7 +18,7 @@ const steps = ["Bag", "Delivery", "Confirmation"];
 
 export function CheckoutProgress({ current }: { current: 1 | 2 | 3 }) {
   return (
-    <ol aria-label="Checkout progress" className="flex w-full max-w-md items-center">
+    <ol aria-label="Checkout progress" className="flex w-full items-center bg-[#626b72] px-4 py-4 text-white">
       {steps.map((step, index) => {
         const number = index + 1;
         const complete = number < current;
@@ -29,17 +29,17 @@ export function CheckoutProgress({ current }: { current: 1 | 2 | 3 }) {
               <span
                 aria-current={active ? "step" : undefined}
                 className={cn(
-                  "grid size-7 shrink-0 place-items-center rounded-full text-[11px] font-semibold transition",
-                  complete && "bg-[color:var(--accent)] text-white",
-                  active && "bg-[color:var(--accent)] text-white",
-                  !complete && !active && "bg-[color:var(--canvas-deep)] text-[color:var(--muted)]"
+                  "grid size-8 shrink-0 place-items-center border-b-2 text-sm font-light transition",
+                  complete && "border-[#00acac] text-white",
+                  active && "border-[#00acac] text-white",
+                  !complete && !active && "border-white/20 text-white/45"
                 )}
               >
                 {complete ? <Check size={13} aria-hidden="true" /> : number}
               </span>
-              <span className={cn("hidden text-xs font-semibold sm:block", active ? "text-[color:var(--ink)]" : "text-[color:var(--muted)]")}>{step}</span>
+              <span className={cn("hidden text-sm font-normal sm:block", active ? "text-white" : "text-white/55")}>{step}</span>
             </span>
-            {index < steps.length - 1 ? <span className={cn("mx-3 h-px min-w-4 flex-1", number < current ? "bg-[color:var(--accent)]" : "bg-[color:var(--line)]")} aria-hidden="true" /> : null}
+            {index < steps.length - 1 ? <span className="mx-4 h-8 w-px min-w-px bg-black/20" aria-hidden="true" /> : null}
           </li>
         );
       })}
@@ -55,7 +55,7 @@ const trustItems = [
 
 export function CommerceTrustStrip({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={cn("grid gap-px overflow-hidden rounded-[20px] bg-[color:var(--line)] ring-1 ring-[color:var(--line)]", compact ? "grid-cols-1" : "sm:grid-cols-3")}>
+    <div className={cn("grid gap-px bg-[color:var(--line)] ring-1 ring-[color:var(--line)]", compact ? "grid-cols-1" : "sm:grid-cols-3")}>
       {trustItems.map((item) => (
         <div key={item.title} className={cn("flex items-start gap-3 bg-white", compact ? "p-4" : "p-5")}>
           <item.icon size={18} className="mt-0.5 shrink-0 text-[color:var(--accent)]" aria-hidden="true" />

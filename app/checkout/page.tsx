@@ -192,14 +192,14 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="pb-20 md:pb-28">
+    <div className="bg-[#eef1f2] pb-20 md:pb-28">
       <section className="container-page pt-6 sm:pt-8">
         <CommerceBreadcrumb current="Checkout" />
         <div className="mt-5 grid gap-8 border-b border-[color:var(--line)] pb-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-end md:pb-10">
           <div>
             <Link href="/cart" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[color:var(--muted)] transition hover:text-[color:var(--ink)]"><ArrowLeft size={15} /> Back to bag</Link>
             <div className="mt-3 flex flex-wrap items-center gap-4">
-              <h1 className="text-5xl font-semibold tracking-[-0.06em] text-[color:var(--ink)] sm:text-6xl">Checkout</h1>
+              <h1 className="text-3xl font-normal text-[color:var(--ink)] sm:text-4xl">Checkout</h1>
               <SecureLabel />
             </div>
             <p className="mt-4 text-sm leading-6 text-[color:var(--muted)]">One final check. Add your delivery details and choose how you would like to pay.</p>

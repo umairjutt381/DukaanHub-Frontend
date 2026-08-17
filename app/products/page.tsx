@@ -7,9 +7,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   return (
     <CatalogPage
       route="/products"
-      eyebrow="The complete store"
-      title="Everything, thoughtfully organised."
-      description="Explore the full DukaanHub catalog with useful filters, verified availability and products selected for life across Pakistan."
+      eyebrow="DukaanHub catalog"
+      title="Our Store"
+      description="Explore trusted products across technology, home, fashion and everyday essentials."
       initialQuery={query}
       promo={{ label: "Fresh perspective", title: "Find the useful, the beautiful and the unexpectedly good.", description: "A rotating edit of well-rated products across technology, home, style and everyday essentials.", href: "/best-sellers", linkLabel: "Shop customer favourites" }}
     />

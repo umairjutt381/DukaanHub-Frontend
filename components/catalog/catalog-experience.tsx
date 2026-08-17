@@ -486,8 +486,6 @@ export function CatalogExperience({
   const visible = filtered.slice(0, visibleCount);
   const activeCount = countFilters(applied, bounds, fixedCategory);
   const recentProducts = recentIds.map((id) => products.find((product) => product.id === id)).filter((product): product is Product => Boolean(product)).slice(0, 4);
-  const collectionCounts = useMemo(() => new Map(categories.map((category) => [category.slug, products.filter((product) => product.category?.slug === category.slug).length])), [categories, products]);
-  const featuredCollections = categories.filter((category) => (collectionCounts.get(category.slug) || 0) > 0).sort((a, b) => Number(b.is_featured) - Number(a.is_featured)).slice(0, 3);
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
@@ -503,8 +501,8 @@ export function CatalogExperience({
   };
 
   return (
-    <div className="bg-white pb-24 text-zinc-950">
-      <section className="container-page pb-10 pt-5 md:pb-14 md:pt-5">
+    <div className="bg-[#eef1f2] pb-24 text-zinc-950">
+      <section className="container-page pb-5 pt-5">
         <nav className="flex items-center gap-2 text-xs font-medium text-zinc-500" aria-label="Breadcrumb">
           <Link href="/" className="rounded-sm transition hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900">Home</Link>
           <span aria-hidden="true">/</span>
@@ -512,39 +510,12 @@ export function CatalogExperience({
           {route !== "/products" ? <><span aria-hidden="true">/</span><span className="max-w-[14rem] truncate text-zinc-950" aria-current="page">{title}</span></> : null}
         </nav>
 
-        <div className="relative mt-5 min-h-[265px] overflow-hidden rounded-[16px] bg-[#202947] text-white sm:min-h-[310px]">
-          <div className="absolute inset-y-0 right-0 w-[55%] bg-[radial-gradient(circle_at_70%_45%,rgba(125,145,201,0.28),transparent_55%)]" />
-          <div className="absolute -right-16 -top-24 size-80 rounded-full border border-white/10" />
-          <div className="relative z-10 flex min-h-[265px] items-center px-8 py-10 sm:min-h-[310px] sm:px-20">
-            <div className="max-w-[560px]">
-              <p className="text-sm font-medium text-white/90">{eyebrow}</p>
-              <h1 className="mt-2 text-[clamp(2rem,4.2vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.04em]">{fixedCategory ? title : "SMART WEARABLE."}</h1>
-              <p className="mt-2 text-base font-semibold">{fixedCategory ? description : "UP to 80% OFF"}</p>
-              <div className="mt-10 flex items-center gap-1.5"><span className="h-1.5 w-5 rounded-full bg-white" /><span className="size-1.5 rounded-full bg-white/80" /><span className="size-1.5 rounded-full bg-white/80" /></div>
-            </div>
+        <div className="relative mt-5 min-h-[150px] overflow-hidden bg-[#3b4248] text-white shadow-sm" style={{ backgroundImage: "linear-gradient(rgba(36,42,48,.70),rgba(36,42,48,.70)),url('/template/img/apple-cover.jpg')", backgroundPosition: "center", backgroundSize: "cover" }}>
+          <div className="flex min-h-[150px] items-center justify-center px-8 py-8 text-center">
+            <div><p className="text-xs font-semibold uppercase tracking-[.16em] text-[#39d0d0]">{eyebrow}</p><h1 className="mt-2 text-3xl font-light sm:text-4xl">{title}</h1><p className="mx-auto mt-2 max-w-xl text-sm text-white/65">{description}</p></div>
           </div>
         </div>
       </section>
-
-      {featuredCollections.length ? (
-        <section className="container-page pb-12" aria-labelledby="featured-collections-heading">
-          <div className="mb-5 flex items-end justify-between gap-4">
-            <div><p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-400">Browse by mood</p><h2 id="featured-collections-heading" className="mt-1 text-2xl font-semibold tracking-[-0.035em]">Featured collections</h2></div>
-            <Link href="/categories" className="hidden min-h-10 items-center gap-1.5 text-sm font-semibold text-zinc-600 transition hover:text-zinc-950 sm:inline-flex">All categories <ArrowRight className="size-4" aria-hidden="true" /></Link>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {featuredCollections.map((category, index) => (
-              <Link key={category.id} href={`/category/${category.slug}`} className={`group relative min-h-44 overflow-hidden rounded-2xl p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${index === 0 ? "bg-zinc-950 text-white" : "bg-zinc-100 text-zinc-950"}`}>
-                <div className={`absolute -right-10 -top-12 size-36 rounded-full transition duration-500 group-hover:scale-110 ${index === 0 ? "bg-emerald-500/25" : "bg-white/80"}`} />
-                <div className="relative flex h-full flex-col justify-between">
-                  <span className={`text-xs font-semibold ${index === 0 ? "text-zinc-400" : "text-zinc-500"}`}>{collectionCounts.get(category.slug)} products</span>
-                  <div><h3 className="text-xl font-semibold tracking-[-0.03em]">{category.name}</h3><span className={`mt-3 inline-flex items-center gap-1.5 text-sm font-semibold ${index === 0 ? "text-white" : "text-zinc-600"}`}>Explore <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" /></span></div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ) : null}
 
       <section className="border-y border-zinc-200 bg-zinc-50/70 py-4" aria-label="Categories">
         <div className="container-page flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -577,9 +548,9 @@ export function CatalogExperience({
               </form>
             </div>
 
-            <div className="my-6 overflow-hidden rounded-2xl bg-emerald-50">
+            <div className="my-6 overflow-hidden border-l-4 border-[#00acac] bg-[#3b4248] text-white">
               <div className="grid min-h-44 gap-6 p-6 sm:grid-cols-[1fr_auto] sm:items-center md:p-8">
-                <div className="max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">{promo.label}</p><h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-zinc-950 md:text-3xl">{promo.title}</h2><p className="mt-3 max-w-xl text-sm leading-6 text-zinc-600">{promo.description}</p></div>
+                <div className="max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#39d0d0]">{promo.label}</p><h2 className="mt-2 text-2xl font-light md:text-3xl">{promo.title}</h2><p className="mt-3 max-w-xl text-sm leading-6 text-white/65">{promo.description}</p></div>
                 <Link href={promo.href} className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl bg-[color:var(--accent)] px-4 text-sm font-semibold text-white transition hover:bg-[color:var(--accent-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2">{promo.linkLabel}<ArrowRight className="size-4" aria-hidden="true" /></Link>
               </div>
             </div>

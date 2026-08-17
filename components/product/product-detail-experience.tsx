@@ -69,7 +69,7 @@ export function ProductDetailExperience({ product, related }: { product: Product
   }, [zoomOpen]);
 
   return (
-    <div className="pb-28 md:pb-0">
+    <div className="bg-[#eef1f2] pb-28 md:pb-0">
       <section className="container-page py-6 md:py-10">
         <nav className="flex min-w-0 items-center gap-2 overflow-hidden text-xs font-medium text-[color:var(--muted)]" aria-label="Breadcrumb">
           <Link href="/" className="shrink-0 hover:text-[color:var(--ink)]">Home</Link><ChevronRight size={13} className="shrink-0" />
@@ -78,7 +78,7 @@ export function ProductDetailExperience({ product, related }: { product: Product
           <ChevronRight size={13} className="shrink-0" /><span className="truncate text-[color:var(--ink)]">{product.name}</span>
         </nav>
 
-        <div className="mt-6 grid items-start gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(390px,0.72fr)] lg:gap-16 xl:gap-24">
+        <div className="mt-6 grid items-start gap-10 border border-[#d2d7da] bg-white p-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(390px,0.72fr)] lg:gap-16 lg:p-8 xl:gap-24">
           <div className={`grid gap-3 ${gallery.length > 1 ? "sm:grid-cols-[80px_minmax(0,1fr)]" : ""}`}>
             {gallery.length > 1 ? (
               <div className="order-2 flex gap-2 overflow-x-auto sm:order-1 sm:flex-col" role="list" aria-label="Product images">
@@ -90,7 +90,7 @@ export function ProductDetailExperience({ product, related }: { product: Product
               </div>
             ) : null}
 
-            <button ref={zoomTriggerRef} type="button" onClick={() => setZoomOpen(true)} className="group relative order-1 aspect-square overflow-hidden rounded-[28px] bg-[color:var(--canvas-deep)] sm:order-2" aria-label={`Enlarge image of ${product.name}`}>
+            <button ref={zoomTriggerRef} type="button" onClick={() => setZoomOpen(true)} className="group relative order-1 aspect-square overflow-hidden bg-white sm:order-2" aria-label={`Enlarge image of ${product.name}`}>
               <AssetImage src={resolveAssetUrl(gallery[activeImage]?.url)} alt={product.name} fill priority sizes="(min-width: 1024px) 58vw, 100vw" className="object-contain p-3 transition duration-700 ease-out group-hover:scale-[1.025] sm:p-6" />
               <span className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-[color:var(--ink)] shadow-sm backdrop-blur transition group-hover:scale-105"><Expand size={17} /></span>
               {discount ? <span className="absolute left-4 top-4 rounded-full bg-[color:var(--ink)] px-3 py-1.5 text-xs font-bold text-white">Save {discount}%</span> : null}
@@ -103,7 +103,7 @@ export function ProductDetailExperience({ product, related }: { product: Product
               <div><p className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[color:var(--muted)]">{product.brand?.name || "DukaanHub"}</p><p className="mt-0.5 text-xs text-[color:var(--muted-light)]">SKU {product.sku}</p></div>
             </div>
 
-            <h1 className="mt-6 text-4xl font-semibold leading-[1.04] tracking-[-0.055em] text-[color:var(--ink)] sm:text-5xl">{product.name}</h1>
+            <h1 className="mt-6 text-3xl font-normal leading-[1.15] text-[color:var(--ink)] sm:text-4xl">{product.name}</h1>
 
             <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
               <span className="inline-flex items-center gap-1.5 font-semibold"><Star size={15} className="fill-amber-400 text-amber-400" /> {product.rating ? product.rating.toFixed(1) : "New"}</span>
@@ -111,7 +111,7 @@ export function ProductDetailExperience({ product, related }: { product: Product
               <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${product.stock > 0 ? "bg-[color:var(--accent-wash)] text-[color:var(--accent-dark)]" : "bg-red-50 text-[color:var(--danger)]"}`}>{product.stock > 0 ? "In stock" : "Out of stock"}</span>
             </div>
 
-            <div className="mt-7 rounded-[20px] bg-[color:var(--canvas-deep)] p-5 sm:p-6">
+            <div className="mt-7 border-y border-[color:var(--line-dark)] py-5">
               <div className="flex flex-wrap items-baseline gap-3">
                 <span className="text-3xl font-semibold tracking-[-0.045em] text-[color:var(--ink)]">{formatCurrency(product.price)}</span>
                 {product.compare_at_price ? <span className="text-sm text-[color:var(--muted-light)] line-through">{formatCurrency(product.compare_at_price)}</span> : null}
