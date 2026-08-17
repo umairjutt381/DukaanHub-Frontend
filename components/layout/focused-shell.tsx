@@ -61,7 +61,7 @@ export function FocusedShell({ children, title, secure = false, support = false 
             ) : null}
 
             <Link
-              href="/products"
+              href="/"
               aria-label="Continue shopping"
               className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[color:var(--accent)] px-3.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-px hover:bg-[color:var(--accent-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 sm:px-4"
             >
