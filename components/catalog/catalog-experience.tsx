@@ -9,12 +9,9 @@ import {
   ChevronDown,
   Grid2X2,
   LayoutList,
-  PackageCheck,
   Search,
   SlidersHorizontal,
   Sparkles,
-  Star,
-  Truck,
   X,
 } from "lucide-react";
 
@@ -507,7 +504,7 @@ export function CatalogExperience({
 
   return (
     <div className="bg-white pb-24 text-zinc-950">
-      <section className="container-page pb-10 pt-8 md:pb-14 md:pt-12">
+      <section className="container-page pb-10 pt-5 md:pb-14 md:pt-5">
         <nav className="flex items-center gap-2 text-xs font-medium text-zinc-500" aria-label="Breadcrumb">
           <Link href="/" className="rounded-sm transition hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900">Home</Link>
           <span aria-hidden="true">/</span>
@@ -515,16 +512,16 @@ export function CatalogExperience({
           {route !== "/products" ? <><span aria-hidden="true">/</span><span className="max-w-[14rem] truncate text-zinc-950" aria-current="page">{title}</span></> : null}
         </nav>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-          <div className="max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">{eyebrow}</p>
-            <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-zinc-950 sm:text-5xl md:text-6xl">{title}</h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-500 md:text-lg">{description}</p>
-          </div>
-          <div className="grid grid-cols-3 divide-x divide-zinc-200 rounded-2xl bg-zinc-50 px-2 py-5">
-            <div className="px-3 text-center"><PackageCheck className="mx-auto size-5 text-emerald-700" aria-hidden="true" /><p className="mt-2 text-[11px] font-semibold text-zinc-700">Verified catalog</p></div>
-            <div className="px-3 text-center"><Truck className="mx-auto size-5 text-emerald-700" aria-hidden="true" /><p className="mt-2 text-[11px] font-semibold text-zinc-700">Nationwide delivery</p></div>
-            <div className="px-3 text-center"><Star className="mx-auto size-5 text-emerald-700" aria-hidden="true" /><p className="mt-2 text-[11px] font-semibold text-zinc-700">Customer rated</p></div>
+        <div className="relative mt-5 min-h-[265px] overflow-hidden rounded-[16px] bg-[#202947] text-white sm:min-h-[310px]">
+          <div className="absolute inset-y-0 right-0 w-[55%] bg-[radial-gradient(circle_at_70%_45%,rgba(125,145,201,0.28),transparent_55%)]" />
+          <div className="absolute -right-16 -top-24 size-80 rounded-full border border-white/10" />
+          <div className="relative z-10 flex min-h-[265px] items-center px-8 py-10 sm:min-h-[310px] sm:px-20">
+            <div className="max-w-[560px]">
+              <p className="text-sm font-medium text-white/90">{eyebrow}</p>
+              <h1 className="mt-2 text-[clamp(2rem,4.2vw,3.4rem)] font-semibold leading-[1.08] tracking-[-0.04em]">{fixedCategory ? title : "SMART WEARABLE."}</h1>
+              <p className="mt-2 text-base font-semibold">{fixedCategory ? description : "UP to 80% OFF"}</p>
+              <div className="mt-10 flex items-center gap-1.5"><span className="h-1.5 w-5 rounded-full bg-white" /><span className="size-1.5 rounded-full bg-white/80" /><span className="size-1.5 rounded-full bg-white/80" /></div>
+            </div>
           </div>
         </div>
       </section>
