@@ -9,7 +9,7 @@ function getSiteOrigin() {
 }
 
 export function resolveApiBaseUrl() {
-  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "/api/v1";
+  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://dukaan-hub-backend-o71r-gc5a1p8yv-umairjutt381s-projects.vercel.app/api/v1";
   if (/^https?:\/\//i.test(configuredBaseUrl)) return configuredBaseUrl.replace(/\/$/, "");
 
   if (configuredBaseUrl.startsWith("/")) {

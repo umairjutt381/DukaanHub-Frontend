@@ -3,7 +3,7 @@ import { getStoredToken } from "@/lib/store/auth";
 import type { Product } from "@/lib/types";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "https://dukaan-hub-backend-o71r-gc5a1p8yv-umairjutt381s-projects.vercel.app/api/v1",
   withCredentials: false
 });
 
