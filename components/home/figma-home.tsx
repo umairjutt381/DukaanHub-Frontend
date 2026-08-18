@@ -12,6 +12,10 @@ function imageFor(product?: Product | null) {
   return resolveAssetUrl(product?.images?.find((item) => item.is_primary)?.url || product?.images?.[0]?.url);
 }
 
+function hasProductImage(product: Product) {
+  return product.images?.some((image) => Boolean(image.url?.trim()));
+}
+
 function discountFor(product: Product) {
   if (!product.compare_at_price || product.compare_at_price <= product.price) return 0;
   return Math.round(((product.compare_at_price - product.price) / product.compare_at_price) * 100);
@@ -64,8 +68,9 @@ export function FigmaHome({ categories, products, brands }: { categories: Catego
     return (preferred.length ? preferred : products).slice(0, 5);
   }, [products]);
   const heroProducts = useMemo(() => {
-    const preferred = products.filter((product) => product.is_featured || product.is_deal);
-    return (preferred.length ? preferred : products).slice(0, 3);
+    const withImages = products.filter(hasProductImage);
+    const preferred = withImages.filter((product) => product.is_featured || product.is_deal);
+    return (preferred.length ? preferred : withImages).slice(0, 3);
   }, [products]);
   const [slide, setSlide] = useState(0);
 
@@ -75,7 +80,7 @@ export function FigmaHome({ categories, products, brands }: { categories: Catego
     return () => window.clearInterval(timer);
   }, [heroProducts.length]);
 
-  const hero = heroProducts[slide] || products[0];
+  const hero = heroProducts[slide];
   const topCategories = categories.slice(0, 7);
   const brandItems = brands.slice(0, 3);
   const essentials = (products.filter((product) => /grocery|fruit|food|beauty|home/i.test(`${product.category?.name} ${product.name}`)).length
