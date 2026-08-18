@@ -4,7 +4,7 @@ import { getConfiguredApiBaseUrl } from "@/lib/api/base-url";
 
 const apiBase = getConfiguredApiBaseUrl();
 
-export function GoogleAuthButton({ label = "Continue with Google", returnTo = "/account" }: { label?: string; returnTo?: string }) {
+export function GoogleAuthButton({ label = "Continue with Google", returnTo = "/" }: { label?: string; returnTo?: string }) {
   return (
     <a
       href={`${apiBase}/auth/google/start?return_to=${encodeURIComponent(returnTo)}`}

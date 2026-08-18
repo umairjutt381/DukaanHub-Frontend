@@ -2,7 +2,7 @@ const AUTH_RETURN_KEY = "dukaanhub_auth_return_to";
 
 const isAuthPath = (pathname: string) => pathname === "/login" || pathname === "/register" || pathname.startsWith("/auth/");
 
-export function sanitizeReturnTo(value: string | null | undefined, fallback = "/account") {
+export function sanitizeReturnTo(value: string | null | undefined, fallback = "/") {
   if (!value || !value.startsWith("/") || value.startsWith("//")) return fallback;
   try {
     const origin = typeof window === "undefined" ? "http://localhost" : window.location.origin;
@@ -15,13 +15,13 @@ export function sanitizeReturnTo(value: string | null | undefined, fallback = "/
 }
 
 export function getAuthReturnTo() {
-  if (typeof window === "undefined") return "/account";
+  if (typeof window === "undefined") return "/";
 
   const fromQuery = new URLSearchParams(window.location.search).get("returnTo");
   if (fromQuery) return sanitizeReturnTo(fromQuery);
 
   const stored = window.sessionStorage.getItem(AUTH_RETURN_KEY);
-  if (stored) return sanitizeReturnTo(stored);
+  if (stored) return stored === "/account" ? "/" : sanitizeReturnTo(stored);
 
   if (document.referrer) {
     try {
@@ -30,11 +30,11 @@ export function getAuthReturnTo() {
         return sanitizeReturnTo(`${referrer.pathname}${referrer.search}${referrer.hash}`);
       }
     } catch {
-      // Ignore malformed referrers and use the account fallback.
+      // Ignore malformed referrers and use the home-page fallback.
     }
   }
 
-  return "/account";
+  return "/";
 }
 
 export function rememberAuthReturnTo(value: string) {

@@ -33,7 +33,7 @@ export default function RegisterPage() {
   const setAuth = useAuthStore((state) => state.setAuth);
   const [showPasswords, setShowPasswords] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [returnTo, setReturnTo] = useState("/account");
+  const [returnTo, setReturnTo] = useState("/");
   const {
     register,
     handleSubmit,
