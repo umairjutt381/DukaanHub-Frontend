@@ -82,7 +82,7 @@ export default function RegisterPage() {
       footerLink={{ href: authHref("/login", returnTo), label: "Sign in" }}
     >
       <div className="mb-5 space-y-4">
-        <GoogleAuthButton label="Sign up with Google" returnTo={returnTo} />
+        <GoogleAuthButton label="Sign up with Google" returnTo="/" />
         <AuthDivider />
       </div>
       <form onSubmit={handleSubmit(submit)} className="space-y-4" noValidate>
