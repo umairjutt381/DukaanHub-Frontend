@@ -1,9 +1,10 @@
 import axios from "axios";
+import { getConfiguredApiBaseUrl } from "@/lib/api/base-url";
 import { getStoredToken } from "@/lib/store/auth";
 import type { Product } from "@/lib/types";
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "https://dukaan-hub-backend-o71r-gc5a1p8yv-umairjutt381s-projects.vercel.app/api/v1",
+  baseURL: getConfiguredApiBaseUrl(),
   withCredentials: false
 });
 

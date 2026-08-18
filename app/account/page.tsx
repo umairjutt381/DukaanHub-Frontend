@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Bell, ChevronRight, MapPin, Package, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
+import { Bell, ChevronRight, LogOut, Mail, MapPin, Package, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
 
 import { AccountSectionHeader, AccountShell } from "@/components/account/account-shell";
 import { AccountErrorState, AccountPageSkeleton } from "@/components/account/account-states";
@@ -92,6 +92,26 @@ export default function AccountPage() {
                 <p className="mt-1 text-xs text-[color:var(--muted)]">{metric.note}</p>
               </Link>
             ))}
+          </section>
+
+          <section className="flex flex-col gap-5 rounded-[var(--radius-lg)] bg-[color:var(--canvas-deep)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6" aria-label="Account details">
+            <div className="flex min-w-0 items-center gap-3.5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[color:var(--ink)] shadow-[var(--shadow-xs)]">
+                <Mail size={18} aria-hidden="true" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--muted)]">Registered email</p>
+                <p className="mt-1 truncate text-sm font-semibold text-[color:var(--ink)]">{accountUser?.email || "Email unavailable"}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={signOut}
+              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-[color:var(--ink)] shadow-[var(--shadow-xs)] ring-1 ring-black/[0.06] transition hover:bg-red-50 hover:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+            >
+              <LogOut size={16} aria-hidden="true" />
+              Sign out
+            </button>
           </section>
 
           <section>

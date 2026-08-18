@@ -181,13 +181,13 @@ export default function CartPage() {
   };
 
   return (
-    <div className="pb-20 md:pb-28">
+    <div className="bg-[#eef1f2] pb-20 md:pb-28">
       <section className="container-page pt-6 sm:pt-8">
         <CommerceBreadcrumb current="Bag" />
         <div className="mt-5 grid gap-8 border-b border-[color:var(--line)] pb-8 md:grid-cols-[minmax(0,1fr)_420px] md:items-end md:pb-10">
           <div>
             <p className="eyebrow">Your selection</p>
-            <h1 className="mt-3 text-5xl font-semibold tracking-[-0.06em] text-[color:var(--ink)] sm:text-6xl">Shopping bag</h1>
+            <h1 className="mt-3 text-3xl font-normal text-[color:var(--ink)] sm:text-4xl">Shopping bag</h1>
             <p className="mt-4 text-sm leading-6 text-[color:var(--muted)]">
               {loading ? "Gathering your items…" : itemCount ? `${itemCount} item${itemCount === 1 ? "" : "s"} reserved while you review.` : "A considered edit of everything you choose."}
             </p>
@@ -258,7 +258,7 @@ export default function CartPage() {
             </div>
 
             <aside className="h-fit lg:sticky lg:top-[var(--sticky-shell-offset)] lg:transition-[top] lg:duration-300" aria-label="Order summary">
-              <div className="rounded-[24px] bg-[color:var(--canvas-deep)] p-5 sm:p-7">
+              <div className="border border-[#d2d7da] bg-white p-5 sm:p-7">
                 <div className="flex items-end justify-between gap-4 border-b border-[color:var(--line-dark)] pb-5">
                   <div><p className="eyebrow">Order summary</p><h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[color:var(--ink)]">Your total</h2></div>
                   <span className="text-xs font-medium text-[color:var(--muted)]">{itemCount} item{itemCount === 1 ? "" : "s"}</span>

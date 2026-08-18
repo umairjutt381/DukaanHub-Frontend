@@ -28,7 +28,7 @@ export default function LoginPage() {
   const setAuth = useAuthStore((state) => state.setAuth);
   const [showPassword, setShowPassword] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [returnTo, setReturnTo] = useState("/account");
+  const [returnTo, setReturnTo] = useState("/");
   const {
     register,
     handleSubmit,

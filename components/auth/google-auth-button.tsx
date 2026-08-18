@@ -1,8 +1,10 @@
 "use client";
 
-const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "https://dukaan-hub-backend-o71r-gc5a1p8yv-umairjutt381s-projects.vercel.app/api/v1";
+import { getConfiguredApiBaseUrl } from "@/lib/api/base-url";
 
-export function GoogleAuthButton({ label = "Continue with Google", returnTo = "/account" }: { label?: string; returnTo?: string }) {
+const apiBase = getConfiguredApiBaseUrl();
+
+export function GoogleAuthButton({ label = "Continue with Google", returnTo = "/" }: { label?: string; returnTo?: string }) {
   return (
     <a
       href={`${apiBase}/auth/google/start?return_to=${encodeURIComponent(returnTo)}`}

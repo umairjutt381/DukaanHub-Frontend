@@ -9,7 +9,7 @@ function getSiteOrigin() {
 }
 
 export function resolveApiBaseUrl() {
-  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://dukaan-hub-backend-o71r-gc5a1p8yv-umairjutt381s-projects.vercel.app/api/v1";
+  const configuredBaseUrl = getConfiguredApiBaseUrl();
   if (/^https?:\/\//i.test(configuredBaseUrl)) return configuredBaseUrl.replace(/\/$/, "");
 
   if (configuredBaseUrl.startsWith("/")) {
@@ -17,4 +17,13 @@ export function resolveApiBaseUrl() {
   }
 
   return configuredBaseUrl.replace(/\/$/, "");
+}
+
+export function getConfiguredApiBaseUrl() {
+  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  if (configuredBaseUrl) return configuredBaseUrl.replace(/\/$/, "");
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("NEXT_PUBLIC_API_BASE_URL is required for production builds");
+  }
+  return "http://127.0.0.1:8001/api/v1";
 }

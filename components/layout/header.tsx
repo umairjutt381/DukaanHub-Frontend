@@ -169,19 +169,20 @@ export function Header() {
 
   return (
     <>
-      <div className="hidden border-b border-[color:var(--line)] bg-[#eef1f7] text-[color:var(--muted)] lg:block">
-        <div className="container-page flex h-[34px] items-center justify-between text-[0.68rem]">
-          <span>Welcome to DukaanHub</span>
+      <div className="hidden border-t-2 border-[#00acac] bg-[#2d353c] text-white/70 lg:block">
+        <div className="container-page flex h-[38px] items-center justify-between text-[0.7rem]">
+          <span>Pakistan · English</span>
           <div className="flex items-center gap-5 font-medium">
-            <Link href="/track-order" className="transition hover:text-[color:var(--accent)]">Track your order</Link>
-            <Link href="/deals" className="transition hover:text-[color:var(--accent)]">All offers</Link>
-            <Link href={user ? "/account" : "/login"} className="transition hover:text-[color:var(--accent)]">{user ? "My account" : "Sign in"}</Link>
+            <Link href="/contact" className="transition hover:text-white">Customer Care</Link>
+            <Link href="/track-order" className="transition hover:text-white">Order Tracker</Link>
+            <Link href="/deals" className="transition hover:text-white">Latest Offers</Link>
+            <Link href={user ? "/account" : "/login"} className="transition hover:text-white">{user ? "My Account" : "Login / Register"}</Link>
           </div>
         </div>
       </div>
-    <header ref={headerRef} className={`sticky top-0 z-50 border-b bg-white/95 backdrop-blur-xl will-change-transform transition-[transform,border-color,box-shadow] duration-300 ease-out focus-within:translate-y-0 motion-reduce:transition-none ${headerVisible ? "translate-y-0" : "-translate-y-full"} ${scrolled && headerVisible ? "border-[color:var(--line-dark)] shadow-[0_8px_24px_rgba(21,64,80,0.08)]" : "border-[color:var(--line)]"}`}>
+    <header ref={headerRef} className={`sticky top-0 z-50 border-b bg-white will-change-transform transition-[transform,border-color,box-shadow] duration-300 ease-out focus-within:translate-y-0 motion-reduce:transition-none ${headerVisible ? "translate-y-0" : "-translate-y-full"} ${scrolled && headerVisible ? "border-[#cfd4d7] shadow-[0_5px_15px_rgba(0,0,0,.08)]" : "border-[#e2e5e7]"}`}>
       <div className="container-page hidden lg:block">
-        <div className="grid h-[72px] grid-cols-[210px_minmax(360px,640px)_240px] items-center justify-between gap-7">
+        <div className="grid h-[76px] grid-cols-[210px_minmax(320px,600px)_260px] items-center justify-between gap-7">
           <Link href="/" aria-label="DukaanHub home" className="w-fit rounded-xl outline-none transition focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-4">
             <BrandLogo />
           </Link>
@@ -252,13 +253,13 @@ export function Header() {
         </div>
       </div>
 
-      <div className="hidden border-t border-[#e7e9f0] lg:block">
+      <div className="hidden border-t border-[#e5e8ea] lg:block">
         <div className="container-page flex h-[50px] items-center">
           <nav className="flex h-full w-full items-center gap-1 overflow-x-auto [scrollbar-width:none]" aria-label="Primary navigation">
             {navigation.map(([label, href]) => {
               const active = isCurrentPath(pathname, href);
               return (
-                <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`flex shrink-0 items-center rounded-full px-3 py-2 text-[12px] font-semibold outline-none transition focus-visible:ring-2 focus-visible:ring-[#212844] ${active || href === "/category/groceries" ? "bg-[#212844] text-white" : "text-[#454a5e] hover:bg-[#f1f4fa]"}`}>
+                <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`flex h-full shrink-0 items-center border-b-2 px-3 text-[12px] font-semibold outline-none transition focus-visible:ring-2 focus-visible:ring-[#00acac] ${active ? "border-[#00acac] text-[#00acac]" : "border-transparent text-[#454a5e] hover:text-[#00acac]"}`}>
                   {label}
                 </Link>
               );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Check, Home, MapPin, Navigation, Phone, ShoppingBag } from "lucide-react";
+import { Check, Home, MapPin, Navigation, Phone, Plus, ShoppingBag } from "lucide-react";
 
 import { AccountCount, AccountShell } from "@/components/account/account-shell";
 import { AccountEmptyState, AccountErrorState, AccountPageSkeleton } from "@/components/account/account-states";
@@ -49,6 +49,9 @@ export default function AccountAddressesPage() {
   const [items, setItems] = useState<AccountAddress[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({ label: "Delivery address", full_name: "", phone: "", line1: "", city: "", postal_code: "", country: "Pakistan" });
 
   const loadAddresses = useCallback(async () => {
     if (!ready) return;
@@ -67,6 +70,22 @@ export default function AccountAddressesPage() {
       setLoading(false);
     }
   }, [handleUnauthorized, ready]);
+
+  const saveAddress = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSaving(true);
+    try {
+      await api.post("/addresses", { ...form, is_default: items.length === 0 });
+      setForm({ label: "Delivery address", full_name: "", phone: "", line1: "", city: "", postal_code: "", country: "Pakistan" });
+      setShowForm(false);
+      await loadAddresses();
+    } catch (requestError) {
+      if (getRequestStatus(requestError) === 401) handleUnauthorized();
+      else setError(true);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   useEffect(() => {
     void loadAddresses();
@@ -89,8 +108,19 @@ export default function AccountAddressesPage() {
         <>
           <div className="mb-5 flex items-center justify-between gap-4">
             <p className="text-xs leading-5 text-[color:var(--muted)]">New addresses are saved securely when you use them during checkout.</p>
-            <Link href="/products" className="hidden shrink-0 text-sm font-semibold text-[color:var(--ink)] hover:text-[color:var(--accent-dark)] sm:inline-flex">Continue shopping</Link>
+            <button type="button" onClick={() => setShowForm((value) => !value)} className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-xl bg-[color:var(--accent)] px-3.5 text-xs font-semibold text-white transition hover:bg-[color:var(--accent-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"><Plus size={15} /> Add another address</button>
           </div>
+          {showForm ? (
+            <form onSubmit={saveAddress} className="mb-6 grid gap-4 rounded-[var(--radius-lg)] bg-[color:var(--canvas-deep)] p-5 sm:grid-cols-2 sm:p-6">
+              <input required placeholder="Label (e.g. Home)" value={form.label} onChange={(event) => setForm({ ...form, label: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)]" />
+              <input required placeholder="Full name" value={form.full_name} onChange={(event) => setForm({ ...form, full_name: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)]" />
+              <input required placeholder="Phone number" value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)]" />
+              <input required placeholder="House, street and area" value={form.line1} onChange={(event) => setForm({ ...form, line1: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)] sm:col-span-2" />
+              <input required placeholder="City" value={form.city} onChange={(event) => setForm({ ...form, city: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)]" />
+              <input required placeholder="Postal code" value={form.postal_code} onChange={(event) => setForm({ ...form, postal_code: event.target.value })} className="min-h-11 rounded-xl border-0 bg-white px-3 text-sm outline-none ring-1 ring-black/[0.06] focus:ring-2 focus:ring-[color:var(--accent)]" />
+              <div className="flex gap-3 sm:col-span-2"><button type="submit" disabled={saving} className="min-h-11 rounded-xl bg-[color:var(--accent)] px-4 text-sm font-semibold text-white disabled:opacity-60">{saving ? "Saving…" : "Save address"}</button><button type="button" onClick={() => setShowForm(false)} className="min-h-11 rounded-xl bg-white px-4 text-sm font-semibold text-[color:var(--ink)] ring-1 ring-black/[0.06]">Cancel</button></div>
+            </form>
+          ) : null}
           <div className="grid gap-5 md:grid-cols-2">
             {orderedAddresses.map((address, index) => <AddressCard key={address.id} address={address} featured={index === 0 && address.is_default} />)}
           </div>
