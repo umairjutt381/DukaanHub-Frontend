@@ -64,7 +64,7 @@ export function TemplateHome({ categories, products, brands }: { categories: Cat
   return (
     <div className="bg-[#eef1f2] text-[#333]">
       <section className="container-page relative min-h-[410px] overflow-hidden bg-[#111] text-white sm:min-h-[500px]">
-        <AssetImage key={active.cover} src={active.cover} alt="" fill priority sizes="100vw" className="object-cover opacity-85" />
+        <AssetImage key={active.cover} src={active.cover} fallbackSrc={active.cover} alt="" fill priority unoptimized sizes="100vw" className="object-cover opacity-85" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/20 to-black/35" />
         <div className="relative z-10 flex min-h-[410px] items-center sm:min-h-[500px]">
           <div className={`max-w-xl py-16 ${active.align === "left" ? "ml-auto" : ""}`}>
@@ -74,7 +74,7 @@ export function TemplateHome({ categories, products, brands }: { categories: Cat
             <Link href="/products" className="mt-7 inline-flex min-h-11 items-center gap-2 border border-white/65 px-5 text-sm font-semibold transition hover:border-[#00acac] hover:bg-[#00acac]">Shop the collection <ArrowRight size={15} /></Link>
           </div>
           <div className={`absolute bottom-0 hidden h-[88%] w-[46%] lg:block ${active.align === "left" ? "left-5" : "right-5"}`}>
-            <AssetImage key={active.product} src={active.product} alt="" fill sizes="46vw" className="object-contain object-bottom drop-shadow-[0_24px_35px_rgba(0,0,0,.35)]" />
+            <AssetImage key={active.product} src={active.product} fallbackSrc={active.product} alt="" fill unoptimized sizes="46vw" className="object-contain object-bottom drop-shadow-[0_24px_35px_rgba(0,0,0,.35)]" />
           </div>
         </div>
         <button type="button" aria-label="Previous promotion" onClick={() => setSlide((slide - 1 + slides.length) % slides.length)} className="absolute left-4 top-1/2 z-20 grid size-10 -translate-y-1/2 place-items-center text-white/60 transition hover:text-white"><ChevronLeft size={30} /></button>
