@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/toast";
+import type { AccountAddress } from "@/components/account/types";
 import { api, getProductsByIds } from "@/lib/api/client";
 import { useCartStore } from "@/lib/store/cart";
 import type { Product } from "@/lib/types";
@@ -88,6 +89,7 @@ export default function CheckoutPage() {
   const idempotencyKeyRef = useRef<string | null>(null);
   const [cart, setCart] = useState<any>(null);
   const [catalog, setCatalog] = useState<Product[]>([]);
+  const [addresses, setAddresses] = useState<AccountAddress[]>([]);
   const [signedIn, setSignedIn] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
   const [loadingCart, setLoadingCart] = useState(true);
@@ -96,6 +98,8 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
     watch,
     formState: { errors, isSubmitting }
   } = useForm<FormValues>({ defaultValues: { payment_method: "cash_on_delivery" } });
@@ -117,7 +121,7 @@ export default function CheckoutPage() {
 
     const loadCheckout = async () => {
       try {
-        const cartResponse = await api.get("/cart");
+        const [cartResponse, addressesResponse] = await Promise.all([api.get("/cart"), api.get<AccountAddress[]>("/addresses")]);
         let nextCart = cartResponse.data;
         const remoteProductIds = new Set<number>((nextCart.items || []).map((item: CheckoutLine) => item.product_id));
         const missingLocalItems = localItems.filter((item) => !remoteProductIds.has(item.product_id));
@@ -131,6 +135,17 @@ export default function CheckoutPage() {
         if (!active) return;
         setCart(nextCart);
         setCatalog(products);
+        setAddresses(addressesResponse.data);
+        const savedAddress = addressesResponse.data.find((address) => address.is_default) || addressesResponse.data[0];
+        if (savedAddress) {
+          reset({
+            shipping_name: savedAddress.full_name,
+            shipping_phone: savedAddress.phone,
+            shipping_address: [savedAddress.line1 || savedAddress.address_line1, savedAddress.line2, savedAddress.city, savedAddress.state, savedAddress.postal_code].filter(Boolean).join(", "),
+            billing_address: "",
+            payment_method: "cash_on_delivery"
+          });
+        }
         setLoadError("");
       } catch (error: any) {
         if (!active) return;
@@ -144,7 +159,15 @@ export default function CheckoutPage() {
     return () => {
       active = false;
     };
-  }, [localItems, notify, router]);
+  }, [localItems, notify, reset, router]);
+
+  const defaultAddress = addresses.find((address) => address.is_default) || addresses[0];
+  const applyDefaultAddress = () => {
+    if (!defaultAddress) return;
+    setValue("shipping_name", defaultAddress.full_name, { shouldValidate: true });
+    setValue("shipping_phone", defaultAddress.phone, { shouldValidate: true });
+    setValue("shipping_address", [defaultAddress.line1 || defaultAddress.address_line1, defaultAddress.line2, defaultAddress.city, defaultAddress.state, defaultAddress.postal_code].filter(Boolean).join(", "), { shouldValidate: true });
+  };
 
   const lines = useMemo<CheckoutLine[]>(() => cart?.items || [], [cart]);
   const subtotal = cart?.subtotal ?? 0;
@@ -225,6 +248,12 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="mt-7 grid gap-5 sm:grid-cols-2">
+                  {defaultAddress ? (
+                    <div className="flex items-center justify-between gap-4 rounded-2xl bg-[color:var(--canvas-deep)] p-4 sm:col-span-2">
+                      <div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.1em] text-[color:var(--muted)]">Saved delivery address</p><p className="mt-1 truncate text-sm font-semibold text-[color:var(--ink)]">{defaultAddress.label || "Default address"}</p><p className="mt-1 truncate text-xs text-[color:var(--muted)]">{defaultAddress.line1 || defaultAddress.address_line1}{defaultAddress.city ? `, ${defaultAddress.city}` : ""}</p></div>
+                      <button type="button" onClick={applyDefaultAddress} className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-xl bg-white px-3.5 text-xs font-semibold text-[color:var(--ink)] ring-1 ring-black/[0.06] transition hover:bg-[color:var(--accent-wash)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"><Check size={14} /> Use default</button>
+                    </div>
+                  ) : null}
                   <label className="block">
                     <span className="mb-2 block text-sm font-semibold text-[color:var(--ink)]">Full name</span>
                     <Input autoComplete="name" placeholder="Recipient name" aria-invalid={Boolean(errors.shipping_name)} aria-describedby={errors.shipping_name ? "shipping-name-error" : undefined} {...register("shipping_name", { required: "Enter the recipient name." })} />

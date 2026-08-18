@@ -63,10 +63,10 @@ export function TemplateHome({ categories, products, brands }: { categories: Cat
 
   return (
     <div className="bg-[#eef1f2] text-[#333]">
-      <section className="relative min-h-[410px] overflow-hidden bg-[#111] text-white sm:min-h-[500px]">
+      <section className="container-page relative min-h-[410px] overflow-hidden bg-[#111] text-white sm:min-h-[500px]">
         <AssetImage key={active.cover} src={active.cover} alt="" fill priority sizes="100vw" className="object-cover opacity-85" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/20 to-black/35" />
-        <div className="container-page relative z-10 flex min-h-[410px] items-center sm:min-h-[500px]">
+        <div className="relative z-10 flex min-h-[410px] items-center sm:min-h-[500px]">
           <div className={`max-w-xl py-16 ${active.align === "left" ? "ml-auto" : ""}`}>
             <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#35d5d5]">{active.eyebrow}</p>
             <h1 className="mt-3 text-4xl font-light tracking-[-.035em] sm:text-6xl">{active.title}</h1>

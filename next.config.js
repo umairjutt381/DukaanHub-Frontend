@@ -28,9 +28,10 @@ const nextConfig = {
     ];
   },
   images: {
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
     remotePatterns: [
-      { protocol: "http", hostname: "localhost" },
-      { protocol: "http", hostname: "127.0.0.1" },
+      { protocol: "http", hostname: "localhost", port: "8001" },
+      { protocol: "http", hostname: "127.0.0.1", port: "8001" },
       { protocol: "https", hostname: "bilalmarth7.pk" },
       { protocol: "https", hostname: "cdn.dummyjson.com" },
       ...(configuredApiPattern ? [configuredApiPattern] : [])

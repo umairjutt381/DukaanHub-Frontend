@@ -1,4 +1,4 @@
-import { TemplateHome } from "@/components/home/template-home";
+import { FigmaHome } from "@/components/home/figma-home";
 import { serverApi } from "@/lib/api/server";
 
 export default async function HomePage() {
@@ -9,5 +9,5 @@ export default async function HomePage() {
   ]);
 
   const products = catalog.items;
-  return <TemplateHome categories={home.categories} products={products} brands={brands} />;
+  return <FigmaHome categories={home.categories} products={products} brands={brands} />;
 }
